@@ -1,0 +1,20 @@
+
+<mat-card style="width: 350px; margin:auto">
+    <mat-selection-list #shoes>
+        <h2 *ngIf="currentTasks.length==0">
+            No Tasks Left!
+            <h4>
+                Add tasks using the add button below
+            </h4> 
+        </h2>
+        <cdk-virtual-scroll-viewport itemSize="50" [style.height]="h" class = "scrollBox">
+            <app-task [selectedTasks]="selected" (handleEve)="manageTodo($event)" [task]="task" *cdkVirtualFor="let task of currentTasks" class="example-item">
+            </app-task>
+        </cdk-virtual-scroll-viewport>
+    </mat-selection-list>>
+</mat-card>
+  
+  <p>
+    completed tasks: {{selected.length}}
+  </p>
+  <button (click)="removeData()" mat-raised-button color="warn">Clear completed</button> 
