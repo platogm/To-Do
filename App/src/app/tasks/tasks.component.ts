@@ -2,6 +2,7 @@ import { Component,Input,Output,EventEmitter, OnInit } from '@angular/core';
 import {
   trigger, state, style, animate, transition, query, group, animation
  } from '@angular/animations';
+ import { DataServService } from '../data-serv.service';
  
  interface obj {todo:string;state:boolean}
 
@@ -18,7 +19,7 @@ export class TasksComponent implements OnInit {
   h:string="";
   maxheigh:number = 5;
 
-  constructor() { 
+  constructor(private dataServ:DataServService) { 
     console.log("this is height: ",this.currentTasks.length)
   }
 
@@ -53,7 +54,9 @@ export class TasksComponent implements OnInit {
     for(let x of this.selected){
       this.currentTasks = this.currentTasks.filter((a, index) => index !== this.currentTasks.indexOf(x));
     }
+    console.log(this.currentTasks)
     this.adjustHeight();
+    this.dataServ.writeUserData(this.currentTasks);
     this.selected = [];
     this.updateEvent.emit(this.currentTasks);
   }

@@ -8,7 +8,7 @@
             </h4> 
         </h2>
         <cdk-virtual-scroll-viewport itemSize="50" [style.height]="h" class = "scrollBox">
-            <app-task [selectedTasks]="selected" (handleEve)="manageTodo($event)" [task]="task" *cdkVirtualFor="let task of currentTasks" class="example-item">
+            <app-task [selectedTasks]="selected" (handleEve)="manageTodo($event)" [task]="task" *cdkVirtualFor="let task of currentTasks">
             </app-task>
         </cdk-virtual-scroll-viewport>
     </mat-selection-list>>

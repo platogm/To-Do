@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set,onValue,remove } from "firebase/database";
+
+
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,20 +27,28 @@ const database = getDatabase(app);
   providedIn: 'root'
 })
 
-
-
 export class DataServService {
-
-  currentTasks: string[] = ["Eat food","Take a bath","Watch Movies","Sleep","Workout","Study"];
-
+  currentTasks: string[]=[];
   constructor() { 
-    this.writeUserData("Plato");
+    //this.writeUserData(this.currentTasks);
+    this.readUserData()
   }
 
-  writeUserData(name:string) {
+  readUserData(){
+    const db = getDatabase();
+    const starCountRef = ref(db, 'To-Do');
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log(data["tasks"]);
+      this.currentTasks=data["tasks"];
+      return data;
+    });
+  }
+
+  writeUserData(name:string[]) {
     const db = getDatabase();
     set(ref(db, 'To-Do/'), {
-      username: name,
+      tasks: name,
     });
   }
 

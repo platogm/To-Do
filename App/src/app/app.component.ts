@@ -10,12 +10,18 @@ import { DataServService } from './data-serv.service';
 })
 export class AppComponent {
   title = 'App';
-  constructor(private cdRef: ChangeDetectorRef,private dataSer:DataServService) { }
-  currentTasks: string[] = this.dataSer.getData();
+  currentTasks: string[] = ["LOADING"];
+  constructor(private cdRef: ChangeDetectorRef,private dataSer:DataServService) { 
+    setTimeout(()=>{
+      this.currentTasks = this.dataSer.getData();
+    },3000)
+   
+  }
+  
 
   addValue(val:string){
     this.currentTasks = [...this.currentTasks, val];
-  
+    this.dataSer.writeUserData(this.currentTasks);
     this.cdRef.detectChanges();
   }
 
